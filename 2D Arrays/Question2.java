@@ -27,17 +27,11 @@ public class Question2 {
      */
     public static long query(long n, long q) {
         if (q <= (1L + n)) {
-
             long t = (1L + n) - q;
-
             return n - t;
-
         } else {
-
             long t = (n + n) - q;
-
             return (n - (n - t) + 1);
-
         }
 
     }
