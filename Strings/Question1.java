@@ -1,4 +1,3 @@
-package Strings;
 
 public class Question1 {
     /*
