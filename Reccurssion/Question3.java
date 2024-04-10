@@ -1,5 +1,3 @@
-package Reccurssion;
-
 public class Question3 {
     /*
      * Question
