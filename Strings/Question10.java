@@ -1,4 +1,6 @@
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Question10 {
     /*
@@ -15,33 +17,32 @@ public class Question10 {
      */
 
     public static String findUncommonCharacters(String s1, String s2) {
-        StringBuilder uncommonChars = new StringBuilder();
 
-        for (char c : s1.toCharArray()) {
-            if (s2.indexOf(c) == -1) {
-                if (uncommonChars.indexOf(String.valueOf(c)) == -1) {
-                    uncommonChars.append(c);
-                }
+        // Hash table of size 26, initialized to 0.
+        int presenceOfChars[] = new int[26];
+        Arrays.fill(presenceOfChars, 0);
+
+        for (int i = 0; i < s1.length(); i++) {
+            presenceOfChars[s1.charAt(i) - 'a'] = 1;
+        }
+
+        for (int i = 0; i < s2.length(); i++) {
+            if (presenceOfChars[s2.charAt(i) - 'a'] == 1) {
+                // Character is present in both the strings.
+                presenceOfChars[s2.charAt(i) - 'a'] = -1;
+            } else if (presenceOfChars[s2.charAt(i) - 'a'] == 0) {
+                // Character is present only in string 2.
+                presenceOfChars[s2.charAt(i) - 'a'] = 2;
             }
         }
-        for (char c : s2.toCharArray()) {
-            if (s1.indexOf(c) == -1) {
-                if (uncommonChars.indexOf(String.valueOf(c)) == -1) {
-                    uncommonChars.append(c);
-                }
+
+        String ans = "";
+        for (int i = 0; i < 26; i++) {
+            // Character is present in either of the two strings.
+            if (presenceOfChars[i] == 1 || presenceOfChars[i] == 2) {
+                ans += (char) ('a' + i);
             }
         }
-        
-        char[] uncommonArray = uncommonChars.toString().toCharArray();
-        Arrays.sort(uncommonArray);
-
-        return new String(uncommonArray);
-    }
-
-    public static void main(String[] args) {
-        // Sample test cases
-        String s1 = "coding ninjas";
-        String s2 = "uncommon common";
-        System.out.println(findUncommonCharacters(s1, s2)); // Output: "acdgjosu"
+        return ans;
     }
 }
